@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Food Order 🍔</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div id="main-content">
+    <header>
+      <div class="header-content">
+        <h1>Thintava Order Pettuko</h1>
+        <button id="themeToggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+      </div>
+      <p>Delicious meals, shakes & drinks — delivered fast!</p>
+    </header>
+
+    <div class="filters">
+      <input
+        type="text"
+        id="search"
+        placeholder="🔍 Search for food or drinks..."
+        onkeyup="filterProducts()"
+      />
+      <div class="categories">
+        <button class="active" onclick="filterByCategory('all')">All</button>
+        <button onclick="filterByCategory('Burger')">Burgers</button>
+        <button onclick="filterByCategory('Pizza')">Pizza</button>
+        <button onclick="filterByCategory('Drinks')">Drinks</button>
+        <button onclick="filterByCategory('Shakes')">Shakes</button>
+        <button onclick="filterByCategory('Dessert')">Desserts</button>
+      </div>
+    </div>
+
+    <!-- Product Section -->
+    <section class="products" id="product-list"></section>
+
+    <!-- Cart Section -->
+    <section class="cart">
+      <h2>🛒 Your Cart</h2>
+      <ul id="cart-items"></ul>
+      <p id="total">Total: ₹0</p>
+    </section>
+
+    <!-- Order Form -->
+    <section class="order-form">
+      <h2>📦 Place Your Order</h2>
+      <form id="orderForm" onsubmit="generateQRCode(event)">
+        <input type="text" id="name" placeholder="Your Name" required />
+        <input type="text" id="address" placeholder="Delivery Address" required />
+        <input type="tel" id="phone" placeholder="Phone Number" required />
+        <button type="submit">Show QR Code 💳</button>
+      </form>
+    </section>
+
+    <footer>
+      <p>© 2025 Modern Food Order | Made with ❤️ by Srikanth</p>
+    </footer>
+  </div>
+
+  <!-- QR Code Section (Full Page View) -->
+  <!-- QR Code Section (Full Page View) -->
+<section id="qr-section" class="qr-full hidden">
+  <div class="qr-box">
+    <h2>📱 Scan to Pay</h2>
+    <!-- ✅ Show your uploaded PhonePe QR -->
+    <img src="image/QR code.jpg" alt="PhonePe QR Code" id="qr-image" />
+    <p id="payment-instructions">
+      Scan this QR code to pay ₹<span id="qr-amount"></span> using PhonePe or any UPI app.
+    </p>
+    <button id="back-btn" onclick="goBack()">🔙 Go Back</button>
+  </div>
+</section>
+
+
+  <script src="script.js"></script>
+</body>
+</html>
