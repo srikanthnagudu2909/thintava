@@ -64,14 +64,24 @@
   <!-- QR Code Section (Full Page View) -->
   <!-- QR Code Section (Full Page View) -->
 <section id="qr-section" class="qr-full hidden">
-  <div class="qr-box">
+  <div class="qr-box" id="qr-box">
     <h2>📱 Scan to Pay</h2>
-    <!-- ✅ Show your uploaded PhonePe QR -->
+
+    <!-- ✅ Your PhonePe QR -->
     <img src="image/QR code.jpg" alt="PhonePe QR Code" id="qr-image" />
+
     <p id="payment-instructions">
       Scan this QR code to pay ₹<span id="qr-amount"></span> using PhonePe or any UPI app.
     </p>
+
     <button id="back-btn" onclick="goBack()">🔙 Go Back</button>
+  </div>
+
+  <!-- ✅ Success Message (hidden initially) -->
+  <div id="success-popup" class="hidden">
+    <div class="success-icon">✅</div>
+    <h2>Payment Received!</h2>
+    <p>Thank you for your order, <span id="success-name"></span> 🙏</p>
   </div>
 </section>
 

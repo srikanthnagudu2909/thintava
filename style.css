@@ -317,3 +317,55 @@ body.dark-mode #search {
   margin-bottom: 15px;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
 }
+/* ============================
+   ✅ Payment Success Animation
+============================ */
+#success-popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.9);
+  text-align: center;
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(0, 255, 0, 0.3);
+  opacity: 0;
+  transition: all 0.6s ease;
+}
+
+#success-popup.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.success-icon {
+  font-size: 60px;
+  color: #00ff88;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#success-popup h2 {
+  margin-top: 15px;
+  color: #00ff88;
+  font-size: 1.8rem;
+}
+
+#success-popup p {
+  margin-top: 10px;
+  font-size: 1rem;
+  color: #ddd;
+}
+
+/* Slight fade behind QR when success shown */
+.qr-full.dimmed #qr-box {
+  opacity: 0.3;
+  transition: opacity 0.4s ease;
+}
