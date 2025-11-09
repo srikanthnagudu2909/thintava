@@ -51,7 +51,7 @@ function updateCart() {
   const cartList = document.getElementById("cart-items");
   const totalElement = document.getElementById("total");
 
-  cartList.innerHTML = "";
+  cartList.innerHTML = "LIST";
   cart.forEach((item) => {
     const li = document.createElement("li");
     li.textContent = `${item.name} - ₹${item.price}`;
@@ -149,7 +149,7 @@ function generateQRCode(event) {
     return;
   }
 
-  // Hide main content smoothly
+  // Hide main content
   const mainContent = document.getElementById("main-content");
   mainContent.style.transition = "opacity 0.4s ease";
   mainContent.style.opacity = "0";
@@ -157,25 +157,176 @@ function generateQRCode(event) {
   setTimeout(() => {
     mainContent.style.display = "none";
 
-    // Show QR fullscreen with fade-in
     const qrSection = document.getElementById("qr-section");
     qrSection.classList.add("active");
 
-    // Show total price
     document.getElementById("qr-amount").textContent = total;
+    document.getElementById("success-name").textContent = name;
 
     alert(`✅ Your total is ₹${total}\nPlease scan the QR code to pay.`);
+
+    // ⏱️ After 30 seconds, show success animation
+    setTimeout(() => {
+      showSuccessPopup();
+    }, 30000); // 30,000ms = 30 seconds
   }, 400);
 }
 
-// Go Back Function
+function showSuccessPopup() {
+  const qrSection = document.getElementById("qr-section");
+  const qrBox = document.getElementById("qr-box");
+  const successPopup = document.getElementById("success-popup");
+
+  // Dim background QR and show success popup
+  qrSection.classList.add("dimmed");
+  successPopup.classList.add("active");
+
+  // After 5 seconds, go back to home
+  setTimeout(() => {
+    successPopup.classList.remove("active");
+    goBack();
+    alert("✅ Payment confirmed successfully!");
+    cart = [];
+    total = 0;
+    updateCart();
+    document.getElementById("orderForm").reset();
+  }, 5000);
+}
+
+// Back to main content
 function goBack() {
   const qrSection = document.getElementById("qr-section");
-  qrSection.classList.remove("active");
-  // Wait for fade-out
+  qrSection.classList.remove("active", "dimmed");
+
   setTimeout(() => {
     const mainContent = document.getElementById("main-content");
     mainContent.style.display = "block";
     setTimeout(() => (mainContent.style.opacity = "1"), 100);
   }, 500);
+}
+// ====================
+// USER AUTH SYSTEM
+// ====================
+
+// Register
+function registerUser(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (!name || !email || !password) {
+    alert("Please fill all fields!");
+    return;
+  }
+
+  const user = { name, email, password };
+
+  // Save user to localStorage
+  localStorage.setItem("user", JSON.stringify(user));
+
+  alert("✅ Registration successful! Please login now.");
+  window.location.href = "index.html";
+}
+
+// Login
+function loginUser(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  if (!storedUser) {
+    alert("No user found. Please register first!");
+    return;
+  }
+
+  if (email === storedUser.email && password === storedUser.password) {
+    localStorage.setItem("loggedIn", "true");
+    alert("✅ Login successful!");
+    window.location.href = "order.html";
+  } else {
+    alert("❌ Invalid email or password!");
+  }
+}
+
+// Logout
+function logoutUser() {
+  localStorage.removeItem("loggedIn");
+  alert("👋 Logged out successfully!");
+  window.location.href = "index.html";
+}
+
+// Restrict access to order.html
+if (window.location.pathname.includes("order.html")) {
+  const isLoggedIn = localStorage.getItem("loggedIn");
+  if (!isLoggedIn) {
+    alert("🚫 Please login first!");
+    window.location.href = "index.html";
+  }
+}
+// ====================
+// USER AUTH SYSTEM
+// ====================
+
+// Register
+function registerUser(event) {
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  if (!name || !email || !password) {
+    alert("Please fill all fields!");
+    return;
+  }
+
+  const user = { name, email, password };
+
+  // Save user to localStorage
+  localStorage.setItem("user", JSON.stringify(user));
+
+  alert("✅ Registration successful! Please login now.");
+  window.location.href = "index.html";
+}
+
+// Login
+function loginUser(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+
+  if (!storedUser) {
+    alert("No user found. Please register first!");
+    return;
+  }
+
+  if (email === storedUser.email && password === storedUser.password) {
+    localStorage.setItem("loggedIn", "true");
+    alert("✅ Login successful!");
+    window.location.href = "order.html";
+  } else {
+    alert("❌ Invalid email or password!");
+  }
+}
+
+// Logout
+function logoutUser() {
+  localStorage.removeItem("loggedIn");
+  alert("👋 Logged out successfully!");
+  window.location.href = "index.html";
+}
+
+// Restrict access to order.html
+if (window.location.pathname.includes("order.html")) {
+  const isLoggedIn = localStorage.getItem("loggedIn");
+  if (!isLoggedIn) {
+    alert("🚫 Please login first!");
+    window.location.href = "index.html";
+  }
 }
