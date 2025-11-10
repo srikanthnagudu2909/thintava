@@ -423,3 +423,52 @@ body.dark-mode #search {
   text-decoration: none;
   font-weight: bold;
 }
+/* ============================
+   Cart Button Styles
+============================ */
+.cart-buttons {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 10px;
+}
+
+.qty-btn {
+  background: #ffb84d;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.qty-btn:hover {
+  background: #ff9900;
+}
+
+.remove-btn {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: #b30000;
+}
+
+#cart-items li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  background: #fff7f0;
+  border-radius: 8px;
+  padding: 8px 12px;
+}

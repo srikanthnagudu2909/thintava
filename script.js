@@ -19,8 +19,7 @@ const products = [
   { name: "Coca-cola", price: 40, category: "Drinks", img: "https://img.freepik.com/free-psd/refreshing-ice-cold-cola-drink-glass-with-splash_632498-25634.jpg?semt=ais_hybrid&w=740&q=80" },
 ];
 
-let cart = [];
-let total = 0;
+
 let currentCategory = "all";
 
 // 🛍 Render Products
@@ -329,4 +328,78 @@ if (window.location.pathname.includes("order.html")) {
     alert("🚫 Please login first!");
     window.location.href = "index.html";
   }
+}
+let cart = [];
+let total = 0;
+
+// 🛒 Add Item to Cart
+function addToCart(name, price) {
+  const existingItem = cart.find(item => item.name === name);
+  if (existingItem) {
+    existingItem.quantity++;
+  } else {
+    cart.push({ name, price, quantity: 1 });
+  }
+  updateCart();
+}
+
+// ➕ Increase Quantity
+function increaseQuantity(index) {
+  cart[index].quantity++;
+  updateCart();
+}
+
+// ➖ Decrease Quantity
+function decreaseQuantity(index) {
+  if (cart[index].quantity > 1) {
+    cart[index].quantity--;
+  } else {
+    // remove item if quantity becomes 0
+    cart.splice(index, 1);
+  }
+  updateCart();
+}
+
+// 🗑️ Remove Entire Item
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+// 🔁 Update Cart Display
+function updateCart() {
+  const cartList = document.getElementById("cart-items");
+  const totalElement = document.getElementById("total");
+
+  cartList.innerHTML = "";
+  total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price * item.quantity;
+
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <span>${item.name} - ₹${item.price} × ${item.quantity}</span>
+      <div class="cart-buttons">
+        <button class="qty-btn" onclick="decreaseQuantity(${index})">➖</button>
+        <button class="qty-btn" onclick="increaseQuantity(${index})">➕</button>
+        <button class="remove-btn" onclick="removeFromCart(${index})">🗑️</button>
+      </div>
+    `;
+    cartList.appendChild(li);
+  });
+
+  totalElement.textContent = `Total: ₹${total}`;
+}
+
+// 🧾 Submit Order
+function submitOrder(event) {
+  event.preventDefault();
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+  alert(`✅ Order placed successfully!\nTotal: ₹${total}`);
+  cart = [];
+  updateCart();
 }
